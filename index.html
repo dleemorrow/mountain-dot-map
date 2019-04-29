@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8' />
+        <title></title>
+        <meta name='robots' content='noindex, nofollow'>
+        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+        <script src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js'></script>
+        <link href='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.css' rel='stylesheet' />
+        <style>
+            body { margin:0; padding:0; }
+            h2, h3 {
+                margin: 10px;
+                font-size: 1.2em;
+            }
+            h3 {
+                font-size: 1em;
+            }
+            p {
+                font-size: 0.85em;
+                margin: 10px;
+                text-align: left;
+            }
+            .map-overlay {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.8);
+                margin-right: 20px;
+                font-family: Arial, sans-serif;
+                overflow: auto;
+                border-radius: 3px;
+            }
+            #map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                width:100%;
+            }
+            #features {
+                top: 0;
+                height: 50px;
+                margin-top: 20px;
+            }
+            #legend {
+                padding: 10px;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+                line-height: 18px;
+                height: 75px;
+                margin-bottom: 40px;
+                width: 120px;
+            }
+            .legend-key {
+                display:inline-block;
+                border-radius: 20%;
+                width: 10px;
+                height: 10px;
+                margin-right: 5px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div id='map'></div>
+        <div class='map-overlay' id='features'><h2>Mountain Dot Map</h2><div id='pd'></div></div>
+        <div class='map-overlay' id='legend'></div>
+
+        <script>
+
+            // define access token
+            mapboxgl.accessToken = 'pk.eyJ1IjoibWFwbWFtbW90aCIsImEiOiJjanYwNnBsbTkxZzQ3M3ltd21oNmlrbWliIn0.7yqwXYrq9XvluR2LHAIpMg';
+
+            // create map
+            var map = new mapboxgl.Map({
+                container: 'map', // container id
+                style: 'mapbox://styles/mapmammoth/cjv07ig0d921k1frvxbeusujj' // map style URL from Mapbox Studio
+            });
+
+            map.on('load', function() {
+                // make a pointer cursor
+                map.getCanvas().style.cursor = 'default';
+
+                // set map bounds to the continental US
+                map.fitBounds([[-133.2421875, 16.972741], [-47.63671875, 52.696361]]);
+
+                // make a pointer cursor
+                map.getCanvas().style.cursor = 'default';
+                
+                // set map scale
+                map.addControl(new mapboxgl.ScaleControl({position: 'bottom-right'}));
+
+                // define layer names
+                var layers = ['0-1489m', '1489-3048m', '3048-4608m', '4608-6167m'];
+                var colors = ['#253C1B', '#37CD4B', '#B9F3AA', '#C6FACD'];
+
+                // create legend
+                for (i=0; i<layers.length; i++) {
+                    var layer = layers[i];
+                    var color = colors[i];
+                    var item = document.createElement('div');
+                    var key = document.createElement('span');
+                    key.className = 'legend-key';
+                    key.style.backgroundColor = color;
+
+                    var value = document.createElement('span');
+                    value.innerHTML = layer;
+                    item.appendChild(key);
+                    item.appendChild(value);
+                    legend.appendChild(item);
+                }
+            });
+
+            map.getCanvas().style.cursor = 'default';
+
+        </script>
+
+    </body>
+</html>
